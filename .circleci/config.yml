@@ -4,7 +4,7 @@ version: 2.1
 defaults: &defaults
   docker:
     - image: circleci/ruby:2.5.3-node-browsers
-  working_directory: ~/grease-cli
+  working_directory: ~/grease
 
 restore_cache: &restore_cache
   keys:
@@ -28,14 +28,9 @@ jobs:
             bundle install --jobs=4 --retry=3 --path vendor/bundle
       - *save_cache
       - run:
-          name: Running Tests...
+          name: Let's Say Hello
           command: |
-            rake spec
-      - store_test_results:
-          path: /tmp/test-results
-      - store_artifacts:
-          path: /tmp/test-results
-          destination: test-results
+            echo "Hello CircleCI"
 
 workflows:
   version: 2.1
