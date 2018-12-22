@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
 	spec.summary                     = 'Grease is a Static Site Generator.'
 	spec.description                 = %q{Static Site Generation done right!}
 	spec.homepage                    = 'https://github.com/thecodechef/grease'
-	spec.licence                     = 'MIT'
+	spec.license                     = 'MIT'
 
 	spec.files                       = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
 	spec.bindir                      = 'exe'
