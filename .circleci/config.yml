@@ -10,13 +10,13 @@ aliases:
   - &restore_cache
     restore_cache: 
       keys:
-        - v1-bundle-{{ .Branch }}-{{ .Revision }}-{{ checksum "Gemfile.lock" }}
+        - v1-bundle-{{ .Branch }}-{{ .Revision }}-{{ checksum "Gemfile" }}
         - v1-bundle-{{ .Branch }}-{{ .Revision }}-
   - &save_cache
     save_cache: 
       paths:
         - ./vendor/bundle
-      key: v1-bundle-{{ .Branch }}-{{ .Revision }}-{{ checksum "Gemfile.lock" }}
+      key: v1-bundle-{{ .Branch }}-{{ .Revision }}-{{ checksum "Gemfile" }}
 
 jobs:
   
