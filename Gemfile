@@ -11,9 +11,9 @@ group :test do
 end
 
 group :guard_plugins do
-  gem "guard_bundler"
-  gem "guard_cucumber"
-  gem "guard_rspec"
-  gem "guard_rake"
+  gem "guard-bundler"
+  gem "guard-cucumber"
+  gem "guard-rspec"
+  gem "guard-rake"
 end
 
