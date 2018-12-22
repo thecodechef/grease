@@ -38,9 +38,9 @@ jobs:
       - checkout
       - *restore_cache
       - run:
-        name: Let's Say Hello
-        command: |
-          echo "Hello CircleCI"
+          name: Let's Say Hello
+          command: |
+            echo "Hello CircleCI"
 
 workflows:
   
