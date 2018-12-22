@@ -1,5 +1,6 @@
 
-version: 2.1
+version: 2
+
 aliases:
   - &defaults
     docker:
@@ -18,8 +19,10 @@ aliases:
     key: v1-dependencies-{{ checksum "Gemfile.lock" }}
 
 jobs:
+  
   build:
     <<: *defaults
+    
     steps:
       - checkout
       - *restore_cache
@@ -34,7 +37,13 @@ jobs:
             echo "Hello CircleCI"
 
 workflows:
-  version: 2.1
-  build_test:
+  
+  version: 2
+  
+  build:
     jobs:
-      - build
+      - build:
+          filters:
+            branches:
+              only:
+                - master
