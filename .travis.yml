@@ -9,8 +9,6 @@ rvm:
  - jruby
 
 before_install:
-  - gem install --system
-  - gem --version
   - gem install bundler
   - bundler --version
 
