@@ -1,6 +1,6 @@
 # README
 
-[![Gem Version](https://img.shields.io/gem/v/grease.svg?style=for-the-badge)](https://www.rubygems.org/gems/[RUBY])
+[![Gem Version](https://img.shields.io/gem/v/grease-cli.svg?style=for-the-badge)](https://www.rubygems.org/gems/grease-cli)
 [![Github Version](https://img.shields.io/github/tag/thecodechef/grease.svg?style=for-the-badge)](https://www.github.com/thecodechef/grease)
 [![License](https://img.shields.io/github/license/thecodechef/grease.svg?style=for-the-badge)](https://www.github.com/thecodechef/grease)
 
