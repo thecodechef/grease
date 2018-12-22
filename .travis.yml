@@ -1,0 +1,30 @@
+language: ruby
+cache: bundler
+sudo: false
+
+before_install:
+  - gem install --system
+  - gem install bundler
+
+rvm:
+  - &ruby2.5 2.5.3
+  - &ruby2.3 2.3.8
+
+matrix:
+  include:
+    - rvm: *ruby2.5
+      name: "Ruby 2.5.3"
+    - rvm: *ruby2.3
+      name: "Ruby 2.3.8"
+
+branches:
+  only:
+    - master
+
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
