@@ -20,21 +20,27 @@ aliases:
 
 jobs:
   
-  build:
+  install_deps:
+    <<: *defaults
+    
+    steps:
+      - checkout
+      - run:
+          name: Installing Dependencies...
+          command: |
+            bundle install --jobs=4 --retry=3 --path vendor/bundle
+      - *save_cache
+  
+  hello:
     <<: *defaults
     
     steps:
       - checkout
       - *restore_cache
       - run:
-          name: Installing Dependencies...
-          command: |
-            bundle install --jobs=4 --retry=3 --path vendor/bundle
-      - *save_cache
-      - run:
-          name: Let's Say Hello
-          command: |
-            echo "Hello CircleCI"
+        name: Let's Say Hello
+        command: |
+          echo "Hello CircleCI"
 
 workflows:
   
@@ -42,7 +48,10 @@ workflows:
   
   build:
     jobs:
-      - build:
+      - install_deps
+      - hello:
+          requires:
+            - install_deps
           filters:
             branches:
               only:

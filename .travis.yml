@@ -1,25 +1,24 @@
 language: ruby
-cache: bundler
+
 sudo: false
+
+rvm:
+ - 2.6
+ - 2.5
+ - 2.4
+ - jruby
 
 before_install:
   - gem install --system
+  - gem --version
   - gem install bundler
+  - bundler --version
 
-rvm:
-  - &ruby2.5 2.5.3
-  - &ruby2.3 2.3.8
+install:
+  - bundler install --jobs=4 --retry=3 --path vendor/bundle
 
-matrix:
-  include:
-    - rvm: *ruby2.5
-      name: "Ruby 2.5.3"
-    - rvm: *ruby2.3
-      name: "Ruby 2.3.8"
+cache: bundler
 
 branches:
   only:
     - master
-
-script:
-  - echo "Hello Travis"
