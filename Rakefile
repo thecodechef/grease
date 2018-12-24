@@ -26,3 +26,5 @@ namespace :git do
     system "This a being Pushed"
   end
 end
+
+task default: git:pre_push
