@@ -8,20 +8,19 @@ aliases:
     working_directory: ~/grease
     environment:
       CC_TEST_REPORTER_ID: $REPORTER_ID
-
   - &restore_cache
-    restore_cache: 
+    restore_cache:
       keys:
         - v1-bundle-{{ .Branch }}-{{ .Revision }}-{{ checksum "Gemfile" }}
         - v1-bundle-{{ .Branch }}-{{ .Revision }}-
   - &save_cache
-    save_cache: 
+    save_cache:
       paths:
         - ./vendor/bundle
       key: v1-bundle-{{ .Branch }}-{{ .Revision }}-{{ checksum "Gemfile" }}
 
 jobs:
-  
+
   install_deps:
     <<: *defaults
     steps:
@@ -32,7 +31,7 @@ jobs:
             bundle install --jobs=4 --retry=3 --path vendor/bundle
       - *save_cache
   build:
-    <<: *defaults   
+    <<: *defaults
     steps:
       - checkout
       - *restore_cache
@@ -46,12 +45,17 @@ jobs:
           root: tmp
           paths:
             - cc-test-reporter
-  
+
   backend_tests:
     <<: *defaults
     steps:
       - checkout
       - *restore_cache
+      - run:
+          name: Installing Dependencies...
+          command: |
+            bundle install --jobs=4 --retry=3 --path vendor/bundle
+      - *save_cache
       - attach_workspace:
           at: ~/grease/tmp
       - run:
@@ -62,7 +66,8 @@ jobs:
       - persist_to_workspace:
           root: tmp
           paths:
-            - codeclimate.backend.json      
+            - codeclimate.backend.json
+
   upload_coverage:
     <<: *defaults
     steps:
@@ -75,9 +80,9 @@ jobs:
             ./tmp/cc-test-reporter upload-coverage -i tmp/codeclimate.total.json
 
 workflows:
-  
+
   version: 2
-  
+
   build:
     jobs:
       - install_deps
