@@ -27,4 +27,8 @@ namespace :git do
   end
 end
 
-task default: git:pre_push
+task :say_hello do
+  system "Hello, CircleCI"
+end
+
+task default: :say_hello
