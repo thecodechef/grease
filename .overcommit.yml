@@ -1,0 +1,81 @@
+PreCommit:
+  All:
+    problem_on_modified_line: report
+
+  AuthorEmail:
+    enabled: true
+    required_files: false
+    required: true
+    quiet: true
+    pattern: '^[^@]+@.*$'
+
+  AuthorName:
+    enabled: true
+    required_files: false
+    required: true
+    quiet: true
+
+  BundleCheck:
+    enabled: true
+    required_executable: 'bundle'
+    flags: ['check']
+    install_command: 'gem install bundle'
+    include:
+      - 'Gemfile'
+      - 'Gemfile.lock'
+      - 'gemspec'
+
+  RakeTarget:
+    enabled: true
+    description: 'Run rake targets'
+    targets:
+      - 'git:pre_commit'
+    required_executable: 'rake'
+    install_command: 'gem install rake'
+
+  Reek:
+    enabled: true
+    description: 'Analyze with Reek'
+    required_executable: 'reek'
+    flags: ['--single-line', '--color']
+    install_command: 'gem install reek'
+    include:
+      - '**/*.gemspec'
+      - '**/*.rake'
+      - '**/*.rb'
+      - '**/Gemfile'
+      - '**/Rakefile'
+
+PostCommit:
+  BundleInstall:
+    enabled: true
+    required_files: true
+    required_executable: 'bundle'
+    install_command: 'gem install bundler'
+    include:
+      - 'Gemfile'
+      - 'Gemfile.lock'
+      - '*.gemspec'
+
+  RakeTarget:
+    enabled: true
+    description: 'Run rake targets'
+    targets:
+      - 'git:post_commit'
+    required_executable: 'rake'
+    install_command: 'gem install rake'
+
+
+PrePush:
+
+  RSpec:
+    enabled: true
+    required_executable: 'rspec'
+
+  RakeTarget:
+    enabled: true
+    description: 'Run rake targets'
+    targets:
+      - 'git:pre_push'
+    required_executable: 'rake'
+    install_command: 'gem install rake'

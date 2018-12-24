@@ -34,3 +34,15 @@ namespace :spec do
     t.rspec_opts = %{--tag ui}
   end
 end
+
+namespace :git do
+  task :pre_commit do
+    system "This a being Commited"
+  end
+  task :post_commit do
+    system "This has been Commited"
+  end
+  task :pre_push do
+    system "This a being Pushed"
+  end
+end
