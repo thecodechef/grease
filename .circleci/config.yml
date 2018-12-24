@@ -6,6 +6,8 @@ aliases:
     docker:
       - image: circleci/ruby:2.5.3-node-browsers
     working_directory: ~/grease
+    environment:
+      CC_TEST_REPORTER_ID: $REPORTER_ID
 
   - &restore_cache
     restore_cache: 
@@ -22,7 +24,6 @@ jobs:
   
   install_deps:
     <<: *defaults
-    
     steps:
       - checkout
       - run:
@@ -30,17 +31,48 @@ jobs:
           command: |
             bundle install --jobs=4 --retry=3 --path vendor/bundle
       - *save_cache
-  
-  hello:
-    <<: *defaults
-    
+  build:
+    <<: *defaults   
     steps:
       - checkout
       - *restore_cache
       - run:
-          name: Let's Say Hello
+          name:  Download cc-test-reporter
           command: |
-            echo "Hello CircleCI"
+            mkdir -p tmp/
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./tmp/cc-test-reporter
+            chmod +x ./tmp/cc-test-reporter
+      - persist_to_workspace:
+          root: tmp
+          paths:
+            - cc-test-reporter
+  
+  backend_tests:
+    <<: *defaults
+    steps:
+      - checkout
+      - *restore_cache
+      - attach_workspace:
+          at: ~/grease/tmp
+      - run:
+          name: Running Backend Tests
+          command: |
+            bundle exec rake
+            ./tmp/cc-test-reporter format-coverage -t simplecov -o tmp/codeclimate.backend.json coverage/backend/.resultset.json
+      - persist_to_workspace:
+          root: tmp
+          paths:
+            - codeclimate.backend.json      
+  upload_coverage:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/grease/tmp
+      - run:
+          name: Uploading Coverage...
+          command: |
+            ./tmp/cc-test-reporter sum-coverage tmp/codeclimate.*.json -p 2 -o tmp/codeclimate.total.json
+            ./tmp/cc-test-reporter upload-coverage -i tmp/codeclimate.total.json
 
 workflows:
   
@@ -49,10 +81,12 @@ workflows:
   build:
     jobs:
       - install_deps
-      - hello:
+      - build:
           requires:
             - install_deps
-          filters:
-            branches:
-              only:
-                - master
+      - backend_tests:
+          requires:
+            - build
+      - upload_coverage:
+          requires:
+            - backend_tests

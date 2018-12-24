@@ -10,7 +10,7 @@
 [![CodeClimate](https://img.shields.io/codeclimate/maintainability/thecodechef/grease.svg?style=for-the-badge)](https://codeclimate.com/github/thecodechef/grease/maintainability)
 [![CodeClimate](https://img.shields.io/codeclimate/coverage/thecodechef/grease.svg?style=for-the-badge)](https://codeclimate.com/github/thecodechef/grease/coverage)
 [![CII Best Practices](https://img.shields.io/cii/summary/2416.svg?style=for-the-badge)](https://bestpractices.coreinfrastructure.org/projects/2416)
-
+[![Reviewed by Hound](https://img.shields.io/badge/Reviewed_by-Hound-8E64B0.svg)](https://houndci.com)
 
 
 > Grease is a Static Site Generator built in Ruby

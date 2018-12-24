@@ -1,0 +1,7 @@
+
+AllCops:
+  Enabled: true
+  Exclude:
+    - 'spec/**/*.rb'
+    - 'test/**/*.rb'
+    - 'features/**/*.rb'

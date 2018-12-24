@@ -19,3 +19,11 @@ environment:
     - ruby_version: 23-x64
     - ruby_version: '25'
     - ruby_version: 25-x64
+
+notifications:
+  - provider: Email
+    to:
+      - cyberchefjay@gmail.com
+    subject: 'Build {{status}}'
+    message: "{{message}}, {{commitId}}, ..."
+    on_failure: true

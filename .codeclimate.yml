@@ -1,0 +1,15 @@
+plugins:
+
+  duplication:
+    enabled: true
+
+  editorconfig:
+    enabled: true
+
+  rubocop:
+    enabled: true
+
+excluded_paths:
+  - '**/spec/**'
+  - '**/test/**'
+  - '**/features/**'
