@@ -7,28 +7,10 @@ Bundler::GemHelper.install_tasks
 require "rake"
 require "fileutils"
 require "pathname"
+require "rspec/core/rake_task"
 
-task :clobber do
-  rm_rf 'pkg'
-  rm_rf 'tmp'
-  rm_rf 'coverage'
-  rm_rf '.yardoc'
+RSpec::Core::RakeTask.new(:spec) do |t|
+  t.pattern %r{^spec/(.+)/(.+)_step.rb$}
 end
 
-namespace :git do
-  task :pre_commit do
-    system "This a being Commited"
-  end
-  task :post_commit do
-    system "This has been Commited"
-  end
-  task :pre_push do
-    system "This a being Pushed"
-  end
-end
-
-task :say_hello do
-  system "Hello, CircleCI"
-end
-
-task default: :say_hello
+task default: :spec
