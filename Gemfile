@@ -8,9 +8,14 @@ end
 
 group :test do
   gem "rspec"
-  gem "rspec-simplecov"
+  gem "rspec-benchmark"
+  gem "rspec-mocks"
   gem "cucumber"
+end
+
+group :coverage do
   gem "simplecov"
+  gem "coveralls"
 end
 
 group :guard_plugins do
