@@ -9,8 +9,17 @@ require "fileutils"
 require "pathname"
 require "rspec/core/rake_task"
 
-RSpec::Core::RakeTask.new(:spec) do |t|
-  t.pattern %r{^spec/(.+)/(.+)_step.rb$}
-end
+RSpec::Core::RakeTask.new(:spec)
 
 task default: :spec
+
+
+desc 'Measure code coverage'
+task :coverage do
+  begin
+    original, ENV['COVERAGE'] = ENV['COVERAGE'], 'true'
+    Rake::Task['spec'].invoke
+  ensure
+    ENV['COVERAGE'] = original
+  end
+end
